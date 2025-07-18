@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  useState, useEffect } from 'react';
 import { Sun, Cloud, CloudRain, CloudSnow, Eye, CloudDrizzle, Zap } from 'lucide-react';
 
 const WeatherEffects = () => {

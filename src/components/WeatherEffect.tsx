@@ -1,49 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { Sun, Cloud, CloudRain, Wind, CloudSnow, Zap, Eye, Thermometer } from 'lucide-react';
+import { useState, useEffect } from "react";
+import {
+  Sun,
+  Cloud,
+  CloudRain,
+  Wind,
+  CloudSnow,
+  Zap,
+  Eye,
+  Thermometer,
+} from "lucide-react";
 
 // Weather condition mapping từ OpenWeatherMap
-const weatherConditions: {[key: string]: string} = {
-  '01d': 'clear-day',
-  '01n': 'clear-night',
-  '02d': 'partly-cloudy-day',
-  '02n': 'partly-cloudy-night',
-  '03d': 'cloudy',
-  '03n': 'cloudy',
-  '04d': 'overcast',
-  '04n': 'overcast',
-  '09d': 'rain',
-  '09n': 'rain',
-  '10d': 'rain',
-  '10n': 'rain',
-  '11d': 'thunderstorm',
-  '11n': 'thunderstorm',
-  '13d': 'snow',
-  '13n': 'snow',
-  '50d': 'fog',
-  '50n': 'fog'
+const weatherConditions: { [key: string]: string } = {
+  "01d": "clear-day",
+  "01n": "clear-night",
+  "02d": "partly-cloudy-day",
+  "02n": "partly-cloudy-night",
+  "03d": "cloudy",
+  "03n": "cloudy",
+  "04d": "overcast",
+  "04n": "overcast",
+  "09d": "rain",
+  "09n": "rain",
+  "10d": "rain",
+  "10n": "rain",
+  "11d": "thunderstorm",
+  "11n": "thunderstorm",
+  "13d": "snow",
+  "13n": "snow",
+  "50d": "fog",
+  "50n": "fog",
 };
 
 const WeatherBackgroundEffects = () => {
-  const [currentWeather, setCurrentWeather] = useState('clear-day');
+  const [currentWeather, setCurrentWeather] = useState("clear-day");
   const [weatherData, setWeatherData] = useState({
     temp: 25,
-    condition: 'Clear',
-    icon: '01d',
-    windSpeed: 5
+    condition: "Clear",
+    icon: "01d",
+    windSpeed: 5,
   });
 
   // Simulate weather changes for demo
   useEffect(() => {
-    const conditions = ['01d', '02d', '03d', '09d', '11d', '13d', '50d'];
+    const conditions = ["01d", "02d", "03d", "09d", "11d", "13d", "50d"];
     let index = 0;
-    
+
     const interval = setInterval(() => {
       const icon = conditions[index % conditions.length];
       setCurrentWeather(weatherConditions[icon]);
-      setWeatherData(prev => ({
+      setWeatherData((prev) => ({
         ...prev,
         icon,
-        condition: getConditionName(icon)
+        condition: getConditionName(icon),
       }));
       index++;
     }, 5000);
@@ -52,36 +61,36 @@ const WeatherBackgroundEffects = () => {
   }, []);
 
   const getConditionName = (icon: string) => {
-    const conditionMap: {[key: string]: string} = {
-      '01d': 'Clear Sky',
-      '02d': 'Partly Cloudy',
-      '03d': 'Cloudy',
-      '09d': 'Rain',
-      '11d': 'Thunderstorm',
-      '13d': 'Snow',
-      '50d': 'Fog'
+    const conditionMap: { [key: string]: string } = {
+      "01d": "Clear Sky",
+      "02d": "Partly Cloudy",
+      "03d": "Cloudy",
+      "09d": "Rain",
+      "11d": "Thunderstorm",
+      "13d": "Snow",
+      "50d": "Fog",
     };
-    return conditionMap[icon] || 'Unknown';
+    return conditionMap[icon] || "Unknown";
   };
 
   const renderWeatherIcon = () => {
-    switch(currentWeather) {
-      case 'clear-day':
-      case 'clear-night':
+    switch (currentWeather) {
+      case "clear-day":
+      case "clear-night":
         return <Sun className="w-16 h-16 text-yellow-300" />;
-      case 'partly-cloudy-day':
-      case 'partly-cloudy-night':
+      case "partly-cloudy-day":
+      case "partly-cloudy-night":
         return <Cloud className="w-16 h-16 text-gray-300" />;
-      case 'cloudy':
-      case 'overcast':
+      case "cloudy":
+      case "overcast":
         return <Cloud className="w-16 h-16 text-gray-400" />;
-      case 'rain':
+      case "rain":
         return <CloudRain className="w-16 h-16 text-blue-300" />;
-      case 'thunderstorm':
+      case "thunderstorm":
         return <Zap className="w-16 h-16 text-yellow-300" />;
-      case 'snow':
+      case "snow":
         return <CloudSnow className="w-16 h-16 text-white" />;
-      case 'fog':
+      case "fog":
         return <Eye className="w-16 h-16 text-gray-300" />;
       default:
         return <Sun className="w-16 h-16 text-yellow-300" />;
@@ -422,14 +431,14 @@ const WeatherBackgroundEffects = () => {
 
       {/* Weather Info Panel */}
       <div className="weather-info">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           {renderWeatherIcon()}
           <div>
             <h1 className="temperature">{weatherData.temp}°</h1>
             <p className="condition">{weatherData.condition}</p>
           </div>
         </div>
-        
+
         <div className="weather-details">
           <div className="detail-item">
             <Wind className="w-5 h-5" />
@@ -445,7 +454,9 @@ const WeatherBackgroundEffects = () => {
       {/* Demo Controls */}
       <div className="demo-controls">
         <p>🌤️ Weather effects demo - Changes automatically every 5 seconds</p>
-        <p>Current: <strong>{weatherData.condition}</strong></p>
+        <p>
+          Current: <strong>{weatherData.condition}</strong>
+        </p>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ import ForecastDay from "./atoms/ForecastDay";
 // Molecular Components
 import WeatherEffectRenderer from "./molecules/WeatherEffectRenderer";
 import CurrentWeatherDisplay from "./molecules/CurrentWeatherDisplay";
-import { processForecastData } from "../helper/WeatherHelper";
+// import { processForecastData } from "../helper/WeatherHelper";
 
 interface WeatherData {
   location: string;
@@ -50,8 +50,6 @@ const cities: City[] = [
   { name: "Singapore", lat: 1.3521, lon: 103.8198 },
 ];
 
-
-
 const WeatherAppComponent = () => {
   const [selectedCity, setSelectedCity] = useState<City>(cities[0]);
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
@@ -65,21 +63,21 @@ const WeatherAppComponent = () => {
     const iconCode = icon.substring(0, 2); // Remove day/night indicator
 
     switch (iconCode) {
-      case '01': // Clear sky
-        return 'clear';
-      case '02': // Few clouds
-      case '03': // Scattered clouds
-      case '04': // Broken clouds
-        return 'clouds';
-      case '09': // Shower rain
-      case '10': // Rain
-        return 'rain';
-      case '11': // Thunderstorm
-        return 'thunderstorm';
-      case '13': // Snow
-        return 'snow';
-      case '50': // Mist/Fog
-        return 'mist';
+      case "01": // Clear sky
+        return "clear";
+      case "02": // Few clouds
+      case "03": // Scattered clouds
+      case "04": // Broken clouds
+        return "clouds";
+      case "09": // Shower rain
+      case "10": // Rain
+        return "rain";
+      case "11": // Thunderstorm
+        return "thunderstorm";
+      case "13": // Snow
+        return "snow";
+      case "50": // Mist/Fog
+        return "mist";
       default:
         break;
     }
@@ -88,42 +86,68 @@ const WeatherAppComponent = () => {
     const conditionLower = condition.toLowerCase();
 
     // Rain detection (English and Japanese)
-    if (conditionLower.includes("rain") || conditionLower.includes("drizzle") ||
-      conditionLower.includes("雨") || conditionLower.includes("小雨") ||
-      conditionLower.includes("大雨") || conditionLower.includes("霧雨")) {
+    if (
+      conditionLower.includes("rain") ||
+      conditionLower.includes("drizzle") ||
+      conditionLower.includes("雨") ||
+      conditionLower.includes("小雨") ||
+      conditionLower.includes("大雨") ||
+      conditionLower.includes("霧雨")
+    ) {
       return "rain";
     }
 
     // Snow detection (English and Japanese)
-    if (conditionLower.includes("snow") || conditionLower.includes("雪") ||
-      conditionLower.includes("吹雪") || conditionLower.includes("小雪")) {
+    if (
+      conditionLower.includes("snow") ||
+      conditionLower.includes("雪") ||
+      conditionLower.includes("吹雪") ||
+      conditionLower.includes("小雪")
+    ) {
       return "snow";
     }
 
     // Thunderstorm detection (English and Japanese)
-    if (conditionLower.includes("thunder") || conditionLower.includes("storm") ||
-      conditionLower.includes("雷") || conditionLower.includes("雷雨") ||
-      conditionLower.includes("嵐")) {
+    if (
+      conditionLower.includes("thunder") ||
+      conditionLower.includes("storm") ||
+      conditionLower.includes("雷") ||
+      conditionLower.includes("雷雨") ||
+      conditionLower.includes("嵐")
+    ) {
       return "thunderstorm";
     }
 
     // Cloud detection (English and Japanese)
-    if (conditionLower.includes("cloud") || conditionLower.includes("overcast") ||
-      conditionLower.includes("曇") || conditionLower.includes("雲") ||
-      conditionLower.includes("くもり")) {
+    if (
+      conditionLower.includes("cloud") ||
+      conditionLower.includes("overcast") ||
+      conditionLower.includes("曇") ||
+      conditionLower.includes("雲") ||
+      conditionLower.includes("くもり")
+    ) {
       return "clouds";
     }
 
     // Mist/Fog detection (English and Japanese)
-    if (conditionLower.includes("mist") || conditionLower.includes("fog") ||
-      conditionLower.includes("haze") || conditionLower.includes("霧") ||
-      conditionLower.includes("もや") || conditionLower.includes("かすみ")) {
+    if (
+      conditionLower.includes("mist") ||
+      conditionLower.includes("fog") ||
+      conditionLower.includes("haze") ||
+      conditionLower.includes("霧") ||
+      conditionLower.includes("もや") ||
+      conditionLower.includes("かすみ")
+    ) {
       return "mist";
     }
 
     // Clear weather detection (English and Japanese)
-    if (conditionLower.includes("clear") || conditionLower.includes("sun") ||
-      conditionLower.includes("晴") || conditionLower.includes("快晴")) {
+    if (
+      conditionLower.includes("clear") ||
+      conditionLower.includes("sun") ||
+      conditionLower.includes("晴") ||
+      conditionLower.includes("快晴")
+    ) {
       return "clear";
     }
 
@@ -131,17 +155,18 @@ const WeatherAppComponent = () => {
     return "clear";
   };
 
-
-
   const getBackgroundClass = () => {
-    if (!weatherData) return 'bg-clear';
+    if (!weatherData) return "bg-clear";
 
-    const weatherType = getWeatherType(weatherData.current.condition, weatherData.current.icon);
+    const weatherType = getWeatherType(
+      weatherData.current.condition,
+      weatherData.current.icon
+    );
     return `bg-${weatherType}`;
   };
 
   // Replace with your OpenWeatherMap API key
-  const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+  // const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
   const convertTemp = (
     temp: number,
@@ -225,14 +250,14 @@ const WeatherAppComponent = () => {
 
       // Different weather for different cities to make it more interesting
       const cityWeatherMap: { [key: string]: number } = {
-        "Tokyo": 0, // clear sky
+        Tokyo: 0, // clear sky
         "New York": 2, // light rain
-        "London": 3, // overcast clouds
-        "Sydney": 1, // few clouds
-        "Paris": 4, // thunderstorm
+        London: 3, // overcast clouds
+        Sydney: 1, // few clouds
+        Paris: 4, // thunderstorm
         "Los Angeles": 0, // clear sky
-        "Dubai": 5, // clear sky
-        "Singapore": 6, // mist
+        Dubai: 5, // clear sky
+        Singapore: 6, // mist
       };
 
       const weatherIndex = cityWeatherMap[city.name] || 0;
@@ -251,7 +276,10 @@ const WeatherAppComponent = () => {
         forecast: Array.from({ length: 7 }, (_, i) => {
           const date = new Date();
           date.setDate(date.getDate() + i);
-          const forecastWeather = weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
+          const forecastWeather =
+            weatherConditions[
+              Math.floor(Math.random() * weatherConditions.length)
+            ];
           return {
             date: date.toLocaleDateString("en-US", {
               weekday: "short",
@@ -296,7 +324,12 @@ const WeatherAppComponent = () => {
   }
 
   if (error) {
-    return <ErrorDisplay error={error} onRetry={() => fetchWeatherData(selectedCity)} />;
+    return (
+      <ErrorDisplay
+        error={error}
+        onRetry={() => fetchWeatherData(selectedCity)}
+      />
+    );
   }
 
   if (!weatherData) return null;
